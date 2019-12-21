@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from './api.service';
+import { AlertService } from './alert.service';
 import { User } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    constructor(private apiService: ApiService) {}
+    redirectUrl = '/jokes';
+
+    constructor(
+        private apiService: ApiService,
+        private alertService: AlertService,
+        private router: Router,
+    ) {}
 
     register(user: User) {
         return this.apiService.register(user);
@@ -12,11 +20,16 @@ export class AuthService {
 
     async login(email: string, password: string) {
         return this.apiService.login(email, password)
-            .subscribe(user => {
-                if (user && user.hasOwnProperty('access_token')) {
-                    localStorage.setItem('user', JSON.stringify(user));
-                }
-            });
+            .subscribe(
+                user => {
+                    if (user && user.hasOwnProperty('access_token')) {
+                        localStorage.setItem('user', JSON.stringify(user));
+                        this.router.navigate([this.redirectUrl]);
+                    }
+                },
+                error => {
+                    this.alertService.error(error);
+                });
     }
 
     getAuthUser() {
