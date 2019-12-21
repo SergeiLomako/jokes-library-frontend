@@ -5,9 +5,10 @@ import { NgModule } from '@angular/core';
 import { Routing } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/layout/header/header.component';
+import { HeaderComponent } from './components/header/header.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { LoginComponent } from './components/login/login.component';
         HeaderComponent,
         AlertComponent,
         LoginComponent,
+        RegisterComponent,
     ],
     imports: [
         BrowserModule,

@@ -9,7 +9,7 @@ export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     submitted = false;
     redirectUrl = '/jokes';
-    loading:boolean = true;
+    loading:boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
