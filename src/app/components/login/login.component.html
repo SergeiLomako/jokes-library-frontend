@@ -16,6 +16,9 @@
                         <div *ngIf="formFields.email.errors.required">
                             Email is required
                         </div>
+                        <div *ngIf="formFields.email.errors.email">
+                            Email isn't correct
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -32,7 +35,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary">Login</button>
+                    <button
+                        class="btn btn-primary"
+                        [disabled]="loading"
+                    >
+                      Login
+                    </button>
                 </div>
             </form>
         </div>

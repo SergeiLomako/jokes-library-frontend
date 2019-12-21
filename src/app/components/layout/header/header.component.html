@@ -1,7 +1,7 @@
 <nav class="d-flex align-items-center justify-content-between mb-2 navbar navbar-expand navbar-light bg-light mb-2 mt-2">
     <h1>Jokes Library</h1>
-    <div class="d-flex align-items-center justify-content-between" *ngIf="userData">
-        <p class="mb-0">{{ userData.firstName }} {{ userData.lastName }} ({{ userData.email }})</p>
+    <div class="d-flex align-items-center justify-content-between" *ngIf="authUser">
+        <p class="mb-0">{{ authUser.firstName }} {{ authUser.lastName }} ({{ authUser.email }})</p>
         <button class="btn btn-primary ml-4" (click)="logout()">Logout</button>
     </div>
 </nav>

@@ -1,27 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services';
+import { AuthService, AlertService } from '../../services';
+import { first } from 'rxjs/operators';
 
 @Component({templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     submitted = false;
     redirectUrl = '/jokes';
+    loading:boolean = true;
 
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
         private authService: AuthService,
+        private alertService: AlertService,
     ) {
-        if (this.authService.getAuthUser()) {
+        if (this.authService.authUserData) {
             this.router.navigate([this.redirectUrl]);
         }
     }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            email: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
         });
     }
@@ -37,6 +40,18 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        this.authService.login(this.formFields.email.value, this.formFields.password.value);
+        const { email, password } = this.formFields;
+        this.loading = true;
+
+        this.authService.login(email.value, password.value)
+          .pipe(first())
+          .subscribe(
+            () => {
+              this.router.navigate([this.redirectUrl]);
+            },
+            error => {
+              this.alertService.error(error);
+              this.loading = false;
+            });
     }
 }

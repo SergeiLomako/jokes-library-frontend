@@ -1,42 +1,43 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { ApiService } from './api.service';
-import { AlertService } from './alert.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    redirectUrl = '/jokes';
+    private authUserSubject: BehaviorSubject<User>;
+    public authUser: Observable<User>;
 
     constructor(
         private apiService: ApiService,
-        private alertService: AlertService,
-        private router: Router,
-    ) {}
+    ) {
+        this.authUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
+        this.authUser = this.authUserSubject.asObservable();
+    }
+
+    public get authUserData(): User {
+      return this.authUserSubject.value;
+    }
 
     register(user: User) {
         return this.apiService.register(user);
     }
 
-    async login(email: string, password: string) {
+    login(email: string, password: string) {
         return this.apiService.login(email, password)
-            .subscribe(
-                user => {
-                    if (user && user.hasOwnProperty('access_token')) {
-                        localStorage.setItem('user', JSON.stringify(user));
-                        this.router.navigate([this.redirectUrl]);
-                    }
-                },
-                error => {
-                    this.alertService.error(error);
-                });
-    }
+          .pipe(map((user: User) => {
+            if (user && user.hasOwnProperty('access_token')) {
+              localStorage.setItem('user', JSON.stringify(user));
+              this.authUserSubject.next(user);
+            }
 
-    getAuthUser() {
-        return JSON.parse(localStorage.getItem('user'));
+            return user;
+          }));
     }
 
     logout() {
-        localStorage.removeItem('user');
+      localStorage.removeItem('user');
+      this.authUserSubject.next(null);
     }
 }
