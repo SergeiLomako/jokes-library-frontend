@@ -45,13 +45,13 @@
         </div>
       </div>
       <ul class="list-group mt-2 mb-2">
-        <app-joke-item *ngFor="let joke of jokes"
+        <app-joke-list-item *ngFor="let joke of jokes"
                        [joke]="joke"
         >
-        </app-joke-item>
+        </app-joke-list-item>
       </ul>
       <nav class="mt-2 mb-2">
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center" *ngIf="jokes.length > 1">
           <li *ngFor="let e of pages; let idx = index"
               [ngClass]="{
                 'page-item': true,

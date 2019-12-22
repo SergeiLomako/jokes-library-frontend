@@ -12,7 +12,7 @@ import {Joke, Pagination} from '../../models';
   styleUrls: ['./jokes.component.css']
 })
 export class JokesComponent implements OnInit {
-  jokes: Joke[];
+  jokes: Joke[] = [];
   page = 1;
   pages: any[];
   limit = environment.limit;

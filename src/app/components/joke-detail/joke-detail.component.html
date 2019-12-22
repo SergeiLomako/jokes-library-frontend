@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <div class="mt-2 mb-2 text-center">
+        <a [routerLink]="['/joke']" class="btn btn-link">Back to list</a>
+      </div>
+      <div class="form-group mt-2 mb-2">
+        <textarea class="form-control"
+                  rows="5"
+                  #jokeInput
+        >
+          {{ joke?.joke }}
+        </textarea>
+      </div>
+      <div class="mt-2 mb-4">
+        <button class="btn btn-primary ml-1"
+                (click)="onSaveClick(jokeInput)"
+        >
+          Save
+        </button>
+        <button class="btn btn-warning ml-1"
+                (click)="onDeleteClick()"
+        >
+          Delete
+        </button>
+        <button *ngIf="showConfirmButton"
+                class="btn btn-danger ml-1"
+                (click)="onConfirmClick()"
+        >
+          Confirm
+        </button>
+      </div>
+      <div class="input-group mb-2 mt-4">
+        <div class="input-group">
+          <input type="text"
+                 class="form-control"
+                 placeholder="Comment..."
+          >
+          <div class="input-group-append">
+            <button class="btn btn-secondary"
+                    type="button"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul class="list-group mt-2 mb-2">
+        <li class="list-group-item pl-2 pr-2" *ngFor="let comment of joke?.comments">
+          <div class="form-group mt-1 mb-1">
+            <textarea class="form-control" rows="3">
+              {{ comment.comment }}
+            </textarea>
+            <div class="mt-1 mb-1">
+              <button class="btn btn-primary">
+                Save
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,8 @@ import { AlertComponent } from './components/alert/alert.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { JokesComponent } from './components/jokes/jokes.component';
-import { JokeItemComponent } from './components/joke-item/joke-item.component';
+import { JokeItemComponent } from './components/joke-list-item/joke-item.component';
+import { JokeDetailComponent } from './components/joke-detail/joke-detail.component';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { JokeItemComponent } from './components/joke-item/joke-item.component';
         RegisterComponent,
         JokesComponent,
         JokeItemComponent,
+        JokeDetailComponent,
     ],
     imports: [
         BrowserModule,
