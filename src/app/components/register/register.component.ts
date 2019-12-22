@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {first} from 'rxjs/operators';
 
-import { AlertService, AuthService } from '../../services';
+import {AlertService, AuthService} from '../../services';
 
 @Component({templateUrl: 'register.component.html'})
 export class RegisterComponent implements OnInit {
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register(this.registerForm.value)
       .pipe(first())
       .subscribe(
-        data => {
+        () => {
           this.alertService.success('Registration successful', true);
           this.router.navigate(['/']);
         },

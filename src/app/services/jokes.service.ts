@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from "../../environments/environment";
-import { Joke } from "../models";
+import { Observable } from 'rxjs';
+import { Joke, Pagination } from "../models";
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +16,23 @@ export class JokesService {
       page = 1,
       limit = environment.limit,
       search = ''
-  }) {
-      return this.http.get(`${this.apiUrl}/jokes?page=${page}&limit=${limit}&search=${search}`);
+  }):Observable<Pagination> {
+      return this.http.get<Pagination>(`${this.apiUrl}/jokes?page=${page}&limit=${limit}&search=${search}`);
   }
 
-  findOne(id: string) {
-      return this.http.get(`${this.apiUrl}/jokes/${id}`);
+  findOne(id: string):Observable<Joke> {
+      return this.http.get<Joke>(`${this.apiUrl}/jokes/${id}`);
   }
 
-  create(joke: Joke) {
-    return this.http.post(`${this.apiUrl}/jokes`, joke);
+  create(joke: Joke):Observable<Joke> {
+    return this.http.post<Joke>(`${this.apiUrl}/jokes`, joke);
   }
 
-  update(joke: Joke) {
-    return this.http.put(`${this.apiUrl}/jokes/${joke._id}`, joke);
+  update(joke: Joke):Observable<Joke> {
+    return this.http.put<Joke>(`${this.apiUrl}/jokes/${joke._id}`, joke);
   }
 
-  delete(id: string) {
-    return this.http.delete(`${this.apiUrl}/jokes/${id}`);
+  delete(id: string):Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/jokes/${id}`);
   }
 }

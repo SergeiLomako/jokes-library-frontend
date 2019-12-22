@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <div class="input-group mb-2 mt-2">
+        <div class="input-group">
+          <input type="text"
+                 class="form-control"
+                 placeholder="New joke..."
+                 [formControl]="newJoke"
+          >
+          <div class="input-group-append">
+            <button class="btn btn-secondary"
+                    type="button"
+                    [disabled]="!newJoke.value"
+                    (click)="onAddClick()"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="input-group mb-2 mt-2">
+        <div class="input-group">
+          <input type="text"
+                 class="form-control"
+                 placeholder="Search..."
+                 [formControl]="search"
+          >
+          <div class="input-group-append">
+            <button class="btn btn-secondary"
+                    type="button"
+                    [disabled]="!search.value"
+                    (click)="onFindClick()"
+            >
+              Find
+            </button>
+            <button class="btn btn-secondary"
+                    type="button"
+                    [disabled]="!search.value"
+                    (click)="onClearClick()"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul class="list-group mt-2 mb-2">
+        <li class="list-group-item" *ngFor="let joke of jokes">
+          <div class="d-flex justify-content-between align-items-center">
+            <p class="mb-0">{{ joke.joke }}</p>
+            <a [routerLink]="['/jokes']" class="btn btn-link">More</a>
+          </div>
+        </li>
+      </ul>
+      <nav class="mt-2 mb-2">
+        <ul class="pagination justify-content-center">
+          <li *ngFor="let e of pages; let idx = index"
+              [ngClass]="{
+                'page-item': true,
+                'active': idx + 1 === page
+              }"
+          >
+            <a class="page-link" (click)="onPageClick(idx + 1)">
+              {{ idx + 1 }}
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

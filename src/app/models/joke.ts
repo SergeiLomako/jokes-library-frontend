@@ -1,5 +1,5 @@
 
 export class Joke {
-    ['_id']: string;
+    _id?: string;
     joke: string;
 }
