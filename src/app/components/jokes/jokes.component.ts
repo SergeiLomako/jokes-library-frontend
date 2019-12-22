@@ -67,7 +67,7 @@ export class JokesComponent implements OnInit {
         this.jokes.unshift(joke);
         this.jokes.pop();
         this.newJoke.setValue('');
-        this.alertService.success('Joke created!', false)
+        this.alertService.success('Joke created!', false, 2000)
       });
   }
 

@@ -19,14 +19,28 @@ export class AlertService {
         });
     }
 
-    success(message: string, keepAfterNavigationChange = false) {
-        this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next({ type: 'success', text: message });
+    hideAfter(ms: number) {
+        setTimeout(() => {
+          this.subject.next(null)
+        }, ms)
     }
 
-    error(message: string, keepAfterNavigationChange = false) {
+    success(message: string, keepAfterNavigationChange = false, timeout = 0) {
+        this.keepAfterNavigationChange = keepAfterNavigationChange;
+        this.subject.next({ type: 'success', text: message });
+
+        if (timeout) {
+          this.hideAfter(timeout)
+        }
+    }
+
+    error(message: string, keepAfterNavigationChange = false, timeout = 0) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'error', text: message });
+
+        if (timeout) {
+            this.hideAfter(timeout)
+        }
     }
 
     getMessage(): Observable<any> {
