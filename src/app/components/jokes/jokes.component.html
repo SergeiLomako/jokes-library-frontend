@@ -45,12 +45,10 @@
         </div>
       </div>
       <ul class="list-group mt-2 mb-2">
-        <li class="list-group-item" *ngFor="let joke of jokes">
-          <div class="d-flex justify-content-between align-items-center">
-            <p class="mb-0">{{ joke.joke }}</p>
-            <a [routerLink]="['/jokes']" class="btn btn-link">More</a>
-          </div>
-        </li>
+        <app-joke-item *ngFor="let joke of jokes"
+                       [joke]="joke"
+        >
+        </app-joke-item>
       </ul>
       <nav class="mt-2 mb-2">
         <ul class="pagination justify-content-center">

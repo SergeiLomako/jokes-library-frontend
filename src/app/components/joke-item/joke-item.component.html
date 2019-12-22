@@ -1,0 +1,6 @@
+<li class="list-group-item">
+  <div class="d-flex justify-content-between align-items-center">
+    <p class="mb-0">{{ joke.joke }}</p>
+    <a [routerLink]="['/jokes/' + joke._id]" class="btn btn-link">More</a>
+  </div>
+</li>

@@ -10,6 +10,7 @@ import { AlertComponent } from './components/alert/alert.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { JokesComponent } from './components/jokes/jokes.component';
+import { JokeItemComponent } from './components/joke-item/joke-item.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { JokesComponent } from './components/jokes/jokes.component';
         LoginComponent,
         RegisterComponent,
         JokesComponent,
+        JokeItemComponent,
     ],
     imports: [
         BrowserModule,
