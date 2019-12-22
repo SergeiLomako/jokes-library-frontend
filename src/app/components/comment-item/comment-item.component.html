@@ -1,0 +1,30 @@
+<li class="list-group-item pl-2 pr-2">
+  <form [formGroup]="updatedCommentForm"
+        (ngSubmit)="onSubmit()"
+  >
+    <div class="form-group mt-1 mb-1">
+      <textarea rows="3"
+                formControlName="updatedComment"
+                [ngClass]="{
+                  'form-control': true,
+                  'border-primary': saving,
+                  'is-invalid': submitted && formFields.updatedComment.errors
+                }"
+      >
+      </textarea>
+      <div *ngIf="submitted && formFields.updatedComment.errors" class="invalid-feedback">
+        <div *ngIf="formFields.updatedComment.errors.required">
+          Comment is required
+        </div>
+        <div *ngIf="formFields.updatedComment.errors.maxlength">
+          Comment must be less than 300 characters
+        </div>
+      </div>
+      <div class="mt-1 mb-1">
+        <button class="btn btn-primary" type="submit">
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+</li>

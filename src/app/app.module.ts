@@ -13,6 +13,7 @@ import { JokesComponent } from './components/jokes/jokes.component';
 import { JokeListItemComponent } from './components/joke-list-item/joke-list-item.component';
 import { JokeDetailComponent } from './components/joke-detail/joke-detail.component';
 import { CommentsComponent } from './components/comments/comments.component';
+import { CommentItemComponent } from './components/comment-item/comment-item.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { CommentsComponent } from './components/comments/comments.component';
         JokeListItemComponent,
         JokeDetailComponent,
         CommentsComponent,
+        CommentItemComponent,
     ],
     imports: [
         BrowserModule,

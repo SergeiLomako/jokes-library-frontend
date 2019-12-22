@@ -22,16 +22,7 @@
   </div>
 </form>
 <ul class="list-group mt-2 mb-2">
-  <li class="list-group-item pl-2 pr-2" *ngFor="let comment of comments">
-    <div class="form-group mt-1 mb-1">
-            <textarea class="form-control" rows="3">
-              {{ comment.comment }}
-            </textarea>
-      <div class="mt-1 mb-1">
-        <button class="btn btn-primary">
-          Save
-        </button>
-      </div>
-    </div>
-  </li>
+  <app-comment-item *ngFor="let comment of comments"
+                    [comment]="comment"
+  ></app-comment-item>
 </ul>
