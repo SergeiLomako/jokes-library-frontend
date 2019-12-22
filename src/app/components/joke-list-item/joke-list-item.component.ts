@@ -6,9 +6,6 @@ import { Joke } from '../../models'
   selector: 'app-joke-list-item',
   templateUrl: './joke-list-item.component.html',
 })
-export class JokeItemComponent {
+export class JokeListItemComponent {
   @Input() joke: Joke;
-
-  constructor() {}
-
 }

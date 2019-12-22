@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {JokesService, AlertService} from '../../services';
-import {FormControl} from '@angular/forms';
-import {environment} from "../../../environments/environment";
-import {first} from "rxjs/internal/operators";
+import { Component, OnInit } from '@angular/core';
+import { JokesService, AlertService } from '../../services';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { environment } from "../../../environments/environment";
+import { first } from "rxjs/internal/operators";
 
 import {Joke, Pagination} from '../../models';
 
@@ -12,19 +12,24 @@ import {Joke, Pagination} from '../../models';
   styleUrls: ['./jokes.component.css']
 })
 export class JokesComponent implements OnInit {
+  submitted = false;
   jokes: Joke[] = [];
   page = 1;
   pages: any[];
   limit = environment.limit;
   search = new FormControl('');
-  newJoke = new FormControl('');
+  addJokeForm: FormGroup;
 
   constructor(
     private jokesService: JokesService,
     private alertService: AlertService,
+    private formBuilder: FormBuilder,
   ) {}
 
   ngOnInit() {
+    this.addJokeForm = this.formBuilder.group({
+      newJoke: ['', [Validators.required, Validators.maxLength(300)]],
+    });
     this.jokesService.findAll({
       page: this.page,
       limit: this.limit
@@ -35,6 +40,10 @@ export class JokesComponent implements OnInit {
       });
   }
 
+  get formFields() {
+    return this.addJokeForm.controls;
+  }
+
   setPaginationData(pagination: Pagination):void {
     const { docs, totalPages, page } = pagination;
     this.jokes = docs;
@@ -42,33 +51,27 @@ export class JokesComponent implements OnInit {
     this.pages = new Array(totalPages);
   }
 
-  update(joke: Joke) {
-    this.jokesService.update(joke)
-      .pipe(first())
-      .subscribe((responseJoke: Joke) => {
-        const updatedJoke: Joke = this.jokes.find(({ _id  }) => _id === responseJoke._id);
-        updatedJoke.joke = responseJoke.joke;
-      });
-  }
+  onSubmit() {
+    this.submitted = true;
 
-  delete(joke: Joke) {
-    this.jokesService.delete(joke._id)
-      .pipe(first())
-      .subscribe((responseJoke: Joke) => {
-        const updatedJoke: Joke = this.jokes.find(({ _id  }) => _id === responseJoke._id);
-        updatedJoke.joke = responseJoke.joke;
-      });
-  }
+    if (this.addJokeForm.invalid) {
+      return;
+    }
 
-  onAddClick() {
-    this.jokesService.create({ joke: this.newJoke.value })
+    this.jokesService.create({ joke: this.formFields.newJoke.value })
       .pipe(first())
-      .subscribe((joke: Joke) => {
-        this.jokes.unshift(joke);
-        this.jokes.pop();
-        this.newJoke.setValue('');
-        this.alertService.success('Joke created!', false, 2000)
-      });
+      .subscribe(
+        (joke: Joke) => {
+          this.jokes.unshift(joke);
+          this.jokes.pop();
+          this.submitted = false;
+          this.formFields.newJoke.setValue('');
+          this.alertService.success(
+            'Joke created!',
+            false,
+            2000
+          )
+        });
   }
 
   onPageClick(page: number) {

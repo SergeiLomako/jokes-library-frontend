@@ -1,7 +1,5 @@
 
 export class Comment {
-    ['_id']: string;
-    joke: string;
-    user: string;
+    ['_id']?: string;
     comment: string;
 }

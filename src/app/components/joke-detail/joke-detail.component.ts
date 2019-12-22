@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { JokesService, AlertService } from "../../services";
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Joke } from '../../models';
 import { first } from "rxjs/operators";
 
@@ -11,14 +12,17 @@ import { first } from "rxjs/operators";
 
 export class JokeDetailComponent implements OnInit {
   joke: Joke;
+  submitted = false;
+  saving = false;
   showConfirmButton = false;
-  @ViewChild('jokeInput', { static: false }) jokeInputRef: ElementRef;
+  updatedJokeForm: FormGroup;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private jokesService: JokesService,
     private alertService: AlertService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
@@ -27,15 +31,32 @@ export class JokeDetailComponent implements OnInit {
       .pipe(first())
       .subscribe((joke: Joke) => {
         this.joke = joke;
+        this.updatedJokeForm = this.formBuilder.group({
+          updatedJoke: [joke.joke, [Validators.required, Validators.maxLength(300)]],
+        });
       })
   }
 
-  onSaveClick(joke: HTMLInputElement) {
-    this.joke.joke = this.jokeInputRef.nativeElement.value;
+  get formFields() {
+    return this.updatedJokeForm.controls;
+  }
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.updatedJokeForm.invalid) {
+      return;
+    }
+
+    this.saving = true;
+    this.joke.joke = this.formFields.updatedJoke.value;
     this.jokesService.update(this.joke)
       .pipe(first())
       .subscribe(() => {
-        this.alertService.success('Joke updated!', false, 2000)
+        this.submitted = false;
+        setTimeout(() => {
+          this.saving = false;
+        }, 1000)
       })
   }
 

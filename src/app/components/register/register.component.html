@@ -14,7 +14,7 @@
             <div *ngIf="formFields.firstName.errors.required">
               First name is required
             </div>
-            <div *ngIf="formFields.firstName.errors.maxLength">
+            <div *ngIf="formFields.firstName.errors.maxlength">
               First name must be less than 30 characters
             </div>
           </div>
@@ -30,7 +30,7 @@
             <div *ngIf="formFields.lastName.errors.required">
               Last Name is required
             </div>
-            <div *ngIf="formFields.lastName.errors.maxLength">
+            <div *ngIf="formFields.lastName.errors.maxlength">
               Last name must be less than 30 characters
             </div>
           </div>
@@ -46,7 +46,7 @@
             <div *ngIf="formFields.email.errors.required">
               Email is required
             </div>
-            <div *ngIf="formFields.email.errors.maxLength">
+            <div *ngIf="formFields.email.errors.maxlength">
               Email must be less than 50 character
             </div>
             <div *ngIf="formFields.email.errors.email">
@@ -68,7 +68,7 @@
             <div *ngIf="formFields.password.errors.minlength">
               Password must be at least 6 characters
             </div>
-            <div *ngIf="formFields.password.errors.maxLength">
+            <div *ngIf="formFields.password.errors.maxlength">
               Password must be less than 30 characters
             </div>
           </div>

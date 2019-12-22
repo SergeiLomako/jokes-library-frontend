@@ -1,0 +1,37 @@
+<form [formGroup]="addCommentForm" (ngSubmit)="onSubmit()">
+  <div class="input-group mb-2 mt-4">
+    <input type="text"
+           formControlName="newComment"
+           class="form-control"
+           placeholder="New comment..."
+           [ngClass]="{ 'is-invalid': submitted && formFields.newComment.errors }"
+    />
+    <div class="input-group-append">
+      <button class="btn btn-secondary">
+        Add
+      </button>
+    </div>
+    <div *ngIf="submitted && formFields.newComment.errors" class="invalid-feedback">
+      <div *ngIf="formFields.newComment.errors.required">
+        Comment is required
+      </div>
+      <div *ngIf="formFields.newComment.errors.maxlength">
+        Comment must be less than 300 characters
+      </div>
+    </div>
+  </div>
+</form>
+<ul class="list-group mt-2 mb-2">
+  <li class="list-group-item pl-2 pr-2" *ngFor="let comment of comments">
+    <div class="form-group mt-1 mb-1">
+            <textarea class="form-control" rows="3">
+              {{ comment.comment }}
+            </textarea>
+      <div class="mt-1 mb-1">
+        <button class="btn btn-primary">
+          Save
+        </button>
+      </div>
+    </div>
+  </li>
+</ul>

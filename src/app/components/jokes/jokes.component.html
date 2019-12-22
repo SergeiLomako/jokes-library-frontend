@@ -1,25 +1,30 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 offset-sm-2">
-      <div class="input-group mb-2 mt-2">
-        <div class="input-group">
+      <form [formGroup]="addJokeForm" (ngSubmit)="onSubmit()">
+        <div class="input-group mb-2 mt-2">
           <input type="text"
+                 formControlName="newJoke"
                  class="form-control"
                  placeholder="New joke..."
-                 [formControl]="newJoke"
-          >
+                 [ngClass]="{ 'is-invalid': submitted && formFields.newJoke.errors }"
+          />
           <div class="input-group-append">
-            <button class="btn btn-secondary"
-                    type="button"
-                    [disabled]="!newJoke.value"
-                    (click)="onAddClick()"
-            >
+            <button class="btn btn-secondary">
               Add
             </button>
           </div>
+          <div *ngIf="submitted && formFields.newJoke.errors" class="invalid-feedback">
+            <div *ngIf="formFields.newJoke.errors.required">
+              Joke is required
+            </div>
+            <div *ngIf="formFields.newJoke.errors.maxlength">
+              Joke must be less than 300 characters
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="input-group mb-2 mt-2">
+      </form>
+      <div class="input-group mb-4 mt-2">
         <div class="input-group">
           <input type="text"
                  class="form-control"
@@ -46,7 +51,7 @@
       </div>
       <ul class="list-group mt-2 mb-2">
         <app-joke-list-item *ngFor="let joke of jokes"
-                       [joke]="joke"
+                            [joke]="joke"
         >
         </app-joke-list-item>
       </ul>
@@ -54,9 +59,9 @@
         <ul class="pagination justify-content-center" *ngIf="jokes.length > 1">
           <li *ngFor="let e of pages; let idx = index"
               [ngClass]="{
-                'page-item': true,
-                'active': idx + 1 === page
-              }"
+              'page-item': true,
+              'active': idx + 1 === page
+            }"
           >
             <a class="page-link" (click)="onPageClick(idx + 1)">
               {{ idx + 1 }}
