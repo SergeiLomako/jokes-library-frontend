@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { JokesService, AlertService } from "../../services";
+import { JokesService, AlertService } from '../../services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Joke } from '../../models';
-import { first } from "rxjs/operators";
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-single-joke',
@@ -23,11 +23,10 @@ export class JokeDetailComponent implements OnInit {
     private jokesService: JokesService,
     private alertService: AlertService,
     private formBuilder: FormBuilder,
-  ) { }
+  ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.jokesService.findOne(id)
+    this.jokesService.findOne(this.route.snapshot.paramMap.get('id'))
       .pipe(first())
       .subscribe((joke: Joke) => {
         this.joke = joke;

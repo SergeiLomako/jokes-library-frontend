@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { JokesService, AlertService } from '../../services';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { environment } from "../../../environments/environment";
-import { first } from "rxjs/internal/operators";
+import { environment } from '../../../environments/environment';
+import { first } from 'rxjs/internal/operators';
 
-import {Joke, Pagination} from '../../models';
+import { Joke, Pagination } from '../../models';
 
 @Component({
   selector: 'app-jokes',
   templateUrl: './jokes.component.html',
-  styleUrls: ['./jokes.component.css']
 })
+
 export class JokesComponent implements OnInit {
   submitted = false;
   jokes: Joke[] = [];

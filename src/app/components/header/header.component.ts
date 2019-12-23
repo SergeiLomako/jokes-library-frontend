@@ -3,18 +3,18 @@ import { User } from '../../models';
 import { AuthService } from '../../services';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.css']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
 })
+
 export class HeaderComponent {
-    authUser: User;
+  authUser: User;
 
   constructor(private authService: AuthService) {
     this.authService.authUser.subscribe(user => this.authUser = user);
   }
 
-    logout() {
-      this.authService.logout();
-    }
+  logout() {
+    this.authService.logout();
+  }
 }

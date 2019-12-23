@@ -48,4 +48,5 @@ import { CommentItemComponent } from './components/comment-item/comment-item.com
     ],
     bootstrap: [AppComponent]
 })
+
 export class AppModule { }

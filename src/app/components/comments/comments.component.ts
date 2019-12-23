@@ -49,8 +49,7 @@ export class CommentsComponent implements OnInit {
     this.commentsService.create(newCommentData)
       .pipe(first())
       .subscribe((newComment: Comment) => {
-        const { _id, comment } = newComment;
-        this.comments.unshift({ _id, comment });
+        this.comments.unshift(newComment);
         this.formFields.newComment.setValue('');
         this.submitted = false;
         this.alertService.success(

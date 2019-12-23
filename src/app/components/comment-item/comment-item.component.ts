@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Comment} from '../../models';
-import { CommentsService } from "../../services";
+import { CommentsService } from '../../services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from "rxjs/operators";
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comment-item',
@@ -48,5 +48,4 @@ export class CommentItemComponent implements OnInit {
         }, 1000)
       })
   }
-
 }

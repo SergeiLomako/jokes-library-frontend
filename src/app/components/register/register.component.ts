@@ -1,11 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {first} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
 
-import {AlertService, AuthService} from '../../services';
+import { AlertService, AuthService } from '../../services';
 
-@Component({templateUrl: 'register.component.html'})
+@Component({
+  templateUrl: 'register.component.html',
+})
+
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
@@ -33,7 +36,9 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  get formFields() { return this.registerForm.controls; }
+  get formFields() {
+    return this.registerForm.controls;
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -45,9 +50,11 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
     this.authService.register(this.registerForm.value)
       .pipe(first())
-      .subscribe(
-        () => {
-          this.alertService.success('Registration successful', true);
+      .subscribe(() => {
+          this.alertService.success(
+            'Registration successful',
+            true
+          );
           this.router.navigate(['/']);
         },
         error => {
