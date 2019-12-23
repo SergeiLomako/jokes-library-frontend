@@ -12,11 +12,13 @@ import { Joke, Pagination } from '../../models';
 })
 
 export class JokesComponent implements OnInit {
+  config = {
+    currentPage: 1,
+    itemsPerPage: environment.limit,
+    totalItems: 0,
+  };
   submitted = false;
   jokes: Joke[] = [];
-  page = 1;
-  pages: any[];
-  limit = environment.limit;
   search = new FormControl('');
   addJokeForm: FormGroup;
 
@@ -30,25 +32,33 @@ export class JokesComponent implements OnInit {
     this.addJokeForm = this.formBuilder.group({
       newJoke: ['', [Validators.required, Validators.maxLength(300)]],
     });
-    this.jokesService.findAll({
-      page: this.page,
-      limit: this.limit
-    })
+    this.jokesService.findAll(this.getFindAllParams())
       .pipe(first())
       .subscribe((pagination: Pagination) => {
-        this.setPaginationData(pagination);
+        this.setConfigDataAndJokes(pagination);
       });
+  }
+
+  getFindAllParams() {
+    return {
+      page: this.config.currentPage,
+      limit: this.config.itemsPerPage,
+      search: this.search.value,
+    };
   }
 
   get formFields() {
     return this.addJokeForm.controls;
   }
 
-  setPaginationData(pagination: Pagination):void {
-    const { docs, totalPages, page } = pagination;
+  setConfigDataAndJokes(pagination: Pagination): void {
+    const { docs, page, totalDocs, limit } = pagination;
+    this.config = {
+      currentPage: page,
+      itemsPerPage: limit,
+      totalItems: totalDocs,
+    };
     this.jokes = docs;
-    this.page = page;
-    this.pages = new Array(totalPages);
   }
 
   onSubmit() {
@@ -70,45 +80,35 @@ export class JokesComponent implements OnInit {
             'Joke created!',
             false,
             2000
-          )
+          );
         });
   }
 
-  onPageClick(page: number) {
-    this.page = page;
-    this.jokesService.findAll({
-      page: this.page,
-      limit: this.limit,
-    })
-      .pipe(first())
-      .subscribe((pagination: Pagination) => {
-        this.setPaginationData(pagination);
-      });
+  pageChange(newPage: number) {
+      this.config.currentPage = newPage;
+      this.jokesService.findAll(this.getFindAllParams())
+          .pipe(first())
+          .subscribe((pagination: Pagination) => {
+              this.setConfigDataAndJokes(pagination);
+          });
   }
 
   onFindClick() {
-    this.page = 1;
-    this.jokesService.findAll({
-      page: this.page,
-      limit: this.limit,
-      search: this.search.value,
-    })
+    this.config.currentPage = 1;
+    this.jokesService.findAll(this.getFindAllParams())
       .pipe(first())
       .subscribe((pagination: Pagination) => {
-        this.setPaginationData(pagination);
+        this.setConfigDataAndJokes(pagination);
       });
   }
 
   onClearClick() {
-    this.page = 1;
+    this.config.currentPage = 1;
     this.search.setValue('');
-    this.jokesService.findAll({
-      page: this.page,
-      limit: this.limit,
-    })
+    this.jokesService.findAll(this.getFindAllParams())
       .pipe(first())
       .subscribe((pagination: Pagination) => {
-        this.setPaginationData(pagination);
+        this.setConfigDataAndJokes(pagination);
       });
   }
 }

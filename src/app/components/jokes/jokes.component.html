@@ -50,24 +50,15 @@
         </div>
       </div>
       <ul class="list-group mt-2 mb-2">
-        <app-joke-list-item *ngFor="let joke of jokes"
-                            [joke]="joke"
-        >
-        </app-joke-list-item>
-      </ul>
-      <nav class="mt-2 mb-2">
-        <ul class="pagination justify-content-center" *ngIf="jokes.length > 1">
-          <li *ngFor="let e of pages; let idx = index"
-              [ngClass]="{
-              'page-item': true,
-              'active': idx + 1 === page
-            }"
+          <app-joke-list-item *ngFor="let joke of jokes | paginate: config"
+                              [joke]="joke"
           >
-            <a class="page-link" (click)="onPageClick(idx + 1)">
-              {{ idx + 1 }}
-            </a>
-          </li>
-        </ul>
+          </app-joke-list-item>
+      </ul>
+      <nav class="mt-2 mb-2 text-center">
+          <pagination-controls (pageChange)="pageChange($event)"
+                               autoHide="true"
+          ></pagination-controls>
       </nav>
     </div>
   </div>

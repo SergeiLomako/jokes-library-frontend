@@ -14,6 +14,8 @@ import { JokeListItemComponent } from './components/joke-list-item/joke-list-ite
 import { JokeDetailComponent } from './components/joke-detail/joke-detail.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @NgModule({
     declarations: [
@@ -32,6 +34,7 @@ import { CommentItemComponent } from './components/comment-item/comment-item.com
         BrowserModule,
         HttpClientModule,
         ReactiveFormsModule,
+        NgxPaginationModule,
         Routing,
     ],
     providers: [

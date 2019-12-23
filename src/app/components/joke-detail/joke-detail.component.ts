@@ -33,7 +33,7 @@ export class JokeDetailComponent implements OnInit {
         this.updatedJokeForm = this.formBuilder.group({
           updatedJoke: [joke.joke, [Validators.required, Validators.maxLength(300)]],
         });
-      })
+      });
   }
 
   get formFields() {
@@ -55,8 +55,8 @@ export class JokeDetailComponent implements OnInit {
         this.submitted = false;
         setTimeout(() => {
           this.saving = false;
-        }, 1000)
-      })
+        }, 1000);
+      });
   }
 
   onDeleteClick() {
@@ -73,6 +73,6 @@ export class JokeDetailComponent implements OnInit {
           2000
         );
         this.router.navigate(['/jokes']);
-      })
+      });
   }
 }
